@@ -23,7 +23,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 // TODO: 2022-06-10 원할한 테스트를 위해서 /api/** 요청은 임시적으로 허용 (추후 지워야 됨)
                 .antMatchers("/api/**").permitAll()
-                .antMatchers("/login", "/signup").permitAll()
+                .antMatchers("/login").permitAll()
                 .antMatchers("/h2-console/**").permitAll()
                 .anyRequest().permitAll();
     }
