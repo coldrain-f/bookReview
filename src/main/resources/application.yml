@@ -24,4 +24,4 @@ logging:
 # 실제 업로드된 이미지가 저장되는 경로 지정
 # local path -> 배포시 aws 의 외부 경로 설정 필요
 file:
-  path: '/Users/choismac/Desktop/Image'
+  path: '/Users/choismac/Desktop/Image/'

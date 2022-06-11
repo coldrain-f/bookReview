@@ -1,6 +1,8 @@
 package edu.bookreview.config;
 
-import edu.bookreview.service.UserService;
+import edu.bookreview.security.PrincipalService;
+import edu.bookreview.security.jwt.JWTCheckFilter;
+import edu.bookreview.security.jwt.JWTLoginFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,7 +22,7 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final UserService userService;
+    private final PrincipalService principalService;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -39,7 +41,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         JWTLoginFilter loginFilter = new JWTLoginFilter(authenticationManager());
 
         // 로그인 된 JWT 토큰을 매 요청마다 체크해주기 위한 필터
-        JWTCheckFilter checkFilter = new JWTCheckFilter(authenticationManager(), userService);
+        JWTCheckFilter checkFilter = new JWTCheckFilter(authenticationManager(), principalService);
 
         http
                 .csrf().disable()
@@ -52,12 +54,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 // TODO: 2022-06-10 원할한 테스트를 위해서 /api/** 요청은 임시적으로 허용 (추후 지워야 됨)
-                .antMatchers("/api/**").permitAll()
+//                .antMatchers("/api/**").permitAll()
+                .antMatchers("/api/signup").permitAll()
                 .antMatchers("/login").permitAll()
                 .antMatchers("/h2-console/**").permitAll()
-                .anyRequest().permitAll()
-                .and()
-                .formLogin();
-        //.successForwardUrl("/");
+                .anyRequest().authenticated();
     }
 }

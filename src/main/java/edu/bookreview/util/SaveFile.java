@@ -1,8 +1,9 @@
 package edu.bookreview.util;
 
-import edu.bookreview.dto.BookReviewDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -12,6 +13,7 @@ import java.util.UUID;
 
 
 @Slf4j
+@Component
 public class SaveFile {
 
     // 이미지 파일 저장 경로는 외부로 분리해야한다.
@@ -21,12 +23,12 @@ public class SaveFile {
     @Value("${file.path}") // application.yml 에 설정된 외부경로, final 사용하면 안됨
     private String uploadFolder;
 
-    public String saveFile(BookReviewDto bookReviewDto) {
+    public String saveFile(MultipartFile imgFile) {
 
         UUID uuid = UUID.randomUUID();
         // 파일 이름이 1.jpg 라면 originFilename 은 1.jpg이다.
         // 동일한 파일명이 업로드 된다면 덮어씌워지기 때문에 UUID_파일명으로 생성한다.
-        String imageFileName = uuid + "_" + bookReviewDto.getFile().getOriginalFilename();
+        String imageFileName = uuid + "_" + imgFile.getOriginalFilename();
         // 파일명 생성이 어떻게 되는지 확인하기 위한 log
         log.info("imageFileName = {}", imageFileName);
 
@@ -37,7 +39,7 @@ public class SaveFile {
         // I/O 사용시에는 예외가 발생할 수 있으므로 try catch로 감싸줘야한다.
         try {
             // 1. 저장할 파일 경로 2. 저장할 파일
-            Files.write(imageFilePath, bookReviewDto.getFile().getBytes());
+            Files.write(imageFilePath, imgFile.getBytes());
         } catch (IOException e){
             e.printStackTrace();
         }

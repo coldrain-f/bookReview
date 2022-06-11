@@ -7,9 +7,9 @@ import edu.bookreview.security.PrincipalDetails;
 import edu.bookreview.util.SaveFile;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
 @Service
@@ -21,9 +21,9 @@ public class BookReviewService {
 
 
     @Transactional
-    public void writeBookReview(PrincipalDetails principalDetails, BookReviewDto bookReviewDto) {
+    public void writeBookReview(PrincipalDetails principalDetails, BookReviewDto bookReviewDto, MultipartFile imgFile) {
 
-        String bookImageUrl = saveFile.saveFile(bookReviewDto);
+        String bookImageUrl = saveFile.saveFile(imgFile);
 
         // BookReview entity 생성
         BookReview bookReview = BookReview.builder()
@@ -37,4 +37,26 @@ public class BookReviewService {
 
         bookReviewRepository.save(bookReview);
     }
+//@Transactional
+//public void writeBookReview(BookReviewDto bookReviewDto, MultipartFile imgFile) {
+//
+//    String bookImageUrl = saveFile.saveFile(imgFile);
+//    User user = User.builder()
+//            .username("ulaf")
+//            .nickname("ulaf")
+//            .password("fasdfsaf")
+//            .build();
+//
+//    // BookReview entity 생성
+//    BookReview bookReview = BookReview.builder()
+//            .user(user)
+//            .title(bookReviewDto.getTitle())
+//            .bookBuyUrl(bookReviewDto.getBookBuyUrl())
+//            .bookImageUrl(bookImageUrl)
+//            .content(bookReviewDto.getContent())
+//            .rank(bookReviewDto.getRank())
+//            .build();
+//
+//    bookReviewRepository.save(bookReview);
+//    }
 }

@@ -1,11 +1,12 @@
 package edu.bookreview.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 
 @RequiredArgsConstructor
-@AllArgsConstructor
+@Getter
 public class UserDto {
 
     private final String username;

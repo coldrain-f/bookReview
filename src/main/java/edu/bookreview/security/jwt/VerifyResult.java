@@ -2,8 +2,10 @@ package edu.bookreview.security.jwt;
 
 import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class VerifyResult {
 
@@ -14,5 +16,9 @@ public class VerifyResult {
     public VerifyResult(boolean success, String username) {
         this.success = success;
         this.username = username;
+    }
+
+    public boolean isSuccess() {
+        return success;
     }
 }
