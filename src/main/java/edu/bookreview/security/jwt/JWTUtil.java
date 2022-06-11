@@ -13,6 +13,7 @@ import java.util.Date;
 public class JWTUtil {
 
     private static final Algorithm ALGORITHM = Algorithm.HMAC256("SECRET");
+    public static final String JWT_COOKIE_NAME = "JWTToken";
     public static final int AUTH_TIME_SECOND = 60 * 20;
     public static final int AUTH_TIME_MILLIS = 60000 * 20; // 인증시간 20분
     public static final int REFRESH_TIME_MILLIS = 60000 * 60 * 24 * 7; // REFRESH 시간 7일
