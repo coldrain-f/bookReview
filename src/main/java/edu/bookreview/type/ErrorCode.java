@@ -5,7 +5,10 @@ import lombok.Getter;
 @Getter
 public enum ErrorCode {
     // Common
-    INVALID_INPUT_VALUE(400, "C001", "Invalid Input Value");
+    INVALID_INPUT_VALUE(400, "C001", "invalid input value"),
+    MISSING_REQUEST_BODY(400, "C002", "missing request body"),
+    INTERNAL_SERVER_ERROR(500, "C003", "internal server error")
+    ;
 
     // User
 
