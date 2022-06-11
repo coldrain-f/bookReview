@@ -1,17 +1,12 @@
 package edu.bookreview.security.jwt;
 
-import edu.bookreview.entity.User;
-import edu.bookreview.security.PrincipalDetails;
 import edu.bookreview.security.PrincipalService;
-import edu.bookreview.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import javax.security.sasl.AuthenticationException;
