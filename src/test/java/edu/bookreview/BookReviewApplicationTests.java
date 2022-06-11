@@ -8,7 +8,11 @@ class BookReviewApplicationTests {
 
     @Test
     void contextLoads() {
+        final SampleEntity member = SampleEntity.builder()
+                .name("Olaf")
+                .build();
 
+        System.out.println("member = " + member);
     }
 
 }

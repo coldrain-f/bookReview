@@ -14,6 +14,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler
     public String handleIllegalArgumentException(Exception e) {
+        System.out.println(e);
         return "예외 발생!";
     }
 
