@@ -1,14 +1,13 @@
-package edu.bookreview;
+package edu.bookreview.jwt;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class BookReviewApplicationTests {
-
+class JWTRequestTest {
+    
     @Test
-    void contextLoads() {
-
+    void 토큰_테스트() {
+        
     }
-
 }
