@@ -12,14 +12,11 @@ import edu.bookreview.util.SaveFile;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-
-import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,5 +64,4 @@ public class BookReviewService extends Timestamped {
 
         bookReviewRepository.save(bookReview);
     }
-
 }
