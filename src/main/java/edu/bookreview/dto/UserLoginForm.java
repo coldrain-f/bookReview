@@ -1,12 +1,14 @@
 package edu.bookreview.dto;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public class UserLoginForm {
 
-    private String username;
-    private String password;
+    public String username;
+    public String password;
 
     public UserLoginForm(String username, String password) {
         this.username = username;

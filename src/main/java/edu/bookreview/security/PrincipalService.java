@@ -8,8 +8,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 @RequiredArgsConstructor
 public class PrincipalService implements UserDetailsService {
@@ -19,7 +17,9 @@ public class PrincipalService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         // 로그인 성공시 PrincipalDetails 를 세션에 저장함.
-        Optional<User> user = userRepository.findByUsername(username);
-        return user.map(PrincipalDetails::new).orElse(null);
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("username not found"));
+
+        return new PrincipalDetails(user);
     }
 }
