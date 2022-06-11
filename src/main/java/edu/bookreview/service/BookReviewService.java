@@ -1,6 +1,18 @@
 package edu.bookreview.service;
 
+import edu.bookreview.dto.DetailPageDTO;
+import edu.bookreview.dto.MainPageDTO;
+import edu.bookreview.entity.BookReview;
+import edu.bookreview.entity.Timestamped;
+import edu.bookreview.repository.BookReviewRepository;
+import edu.bookreview.repository.UserRepository;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @Getter
