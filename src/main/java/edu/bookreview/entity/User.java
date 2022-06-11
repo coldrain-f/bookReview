@@ -23,7 +23,7 @@ public class User extends Timestamped {
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false, unique = true)
+    @Column(unique = true, nullable = false)
     private String nickname;
 
     @Builder

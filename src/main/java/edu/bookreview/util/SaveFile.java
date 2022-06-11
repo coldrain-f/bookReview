@@ -29,8 +29,8 @@ public class SaveFile {
         // 파일 이름이 1.jpg 라면 originFilename 은 1.jpg이다.
         // 동일한 파일명이 업로드 된다면 덮어씌워지기 때문에 UUID_파일명으로 생성한다.
         String imageFileName = uuid + "_" + imgFile.getOriginalFilename();
-        // 파일명 생성이 어떻게 되는지 확인하기 위한 log
-        log.info("imageFileName = {}", imageFileName);
+//        // 파일명 생성이 어떻게 되는지 확인하기 위한 log
+//        log.info("imageFileName = {}", imageFileName);
 
         // 실제 이미지 파일이 어디에 저장될지 경로를 지정해줘야 한다.
         // 경로는 application.yml에 저장되어있다.
