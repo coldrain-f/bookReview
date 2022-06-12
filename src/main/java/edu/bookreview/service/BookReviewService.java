@@ -37,26 +37,4 @@ public class BookReviewService {
 
         bookReviewRepository.save(bookReview);
     }
-//@Transactional
-//public void writeBookReview(BookReviewDto bookReviewDto, MultipartFile imgFile) {
-//
-//    String bookImageUrl = saveFile.saveFile(imgFile);
-//    User user = User.builder()
-//            .username("ulaf")
-//            .nickname("ulaf")
-//            .password("fasdfsaf")
-//            .build();
-//
-//    // BookReview entity 생성
-//    BookReview bookReview = BookReview.builder()
-//            .user(user)
-//            .title(bookReviewDto.getTitle())
-//            .bookBuyUrl(bookReviewDto.getBookBuyUrl())
-//            .bookImageUrl(bookImageUrl)
-//            .content(bookReviewDto.getContent())
-//            .rank(bookReviewDto.getRank())
-//            .build();
-//
-//    bookReviewRepository.save(bookReview);
-//    }
 }

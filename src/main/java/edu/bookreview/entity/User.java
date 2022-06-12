@@ -26,6 +26,7 @@ public class User extends Timestamped {
     @Column(unique = true, nullable = false)
     private String nickname;
 
+
     @Builder
     public User(String username, String password, String nickname) {
         Assert.hasText(username, "username must not be empty");

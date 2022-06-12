@@ -3,14 +3,12 @@ package edu.bookreview.controller;
 import edu.bookreview.dto.BookReviewDto;
 import edu.bookreview.security.PrincipalDetails;
 import edu.bookreview.service.BookReviewService;
+import edu.bookreview.service.LikeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
@@ -19,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class BookReviewController {
 
     private final BookReviewService bookReviewService;
+    private final LikeService likeService;
 
     // Multipart requests consist of sending data of many different types separated by a boundary as part of a single HTTP method call.
     // @RequestPart : method argument 와 함께 요청되는 multipart request를 관리하는 어노테이션
@@ -35,5 +34,11 @@ public class BookReviewController {
             , @RequestPart BookReviewDto bookReviewDto
             , @RequestPart(value = "file", required = false) MultipartFile imgFile){
         bookReviewService.writeBookReview(principalDetails, bookReviewDto, imgFile);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @PostMapping("/api/bookreview/{review_id}/like")
+    public boolean likeBookReview(@AuthenticationPrincipal PrincipalDetails principalDetails, @PathVariable Long review_id){
+        return likeService.likeBookReview(principalDetails, review_id);
     }
 }

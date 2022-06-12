@@ -4,6 +4,8 @@ import lombok.*;
 import org.springframework.util.Assert;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Entity
@@ -38,6 +40,9 @@ public class BookReview extends Timestamped {
     @Column(nullable = false)
     private Integer rank;
 
+    @OneToMany(mappedBy = "bookReview")
+    private List<LikeBookReview> likeBookReviews = new ArrayList<>();
+
     @Builder
     public BookReview(User user, String title, String bookBuyUrl, String bookImageUrl, String content, Integer rank) {
         Assert.hasText(title, "title must not be empty");
@@ -51,6 +56,16 @@ public class BookReview extends Timestamped {
         this.content = content;
         this.rank = rank;
     }
+
+    public void addBookReview(LikeBookReview likeBookReview){
+        likeBookReviews.add(likeBookReview);
+        likeBookReview.addBookReview(this);
+    }
+
+    public void updateLikeCnt(Integer likeCount){
+        this.likeCount = likeCount;
+    }
+
 
     @PrePersist // 영속화 되기전에 실행.
     public void initDefaultLikeCount() {
