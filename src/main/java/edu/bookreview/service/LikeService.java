@@ -22,7 +22,7 @@ public class LikeService {
     // TODO: 2022/06/13
     // 좋아요 기능 추가
     // 로그인한 유저가 해당 게시글에 좋아요를 추가할 때 해당 게시글에 좋아요를 한 적이 있으면 return false
-    //
+    // 처음 좋아요를 하는 경우 해당 게시글의 likeCount + 1, retrun true
     @Transactional
     public boolean likeBookReview(PrincipalDetails principalDetails, Long review_id) {
 

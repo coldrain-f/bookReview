@@ -29,12 +29,15 @@ public class BookReview extends Timestamped {
 
     // 사진을 전송받아서 그 사진을 서버의 특정 폴더에 저장
     // DB의 경로를 저장
+    @Column
     private String bookImageUrl;
 
     // 값이 비어있어도 괜찮은지?
+    @Column(nullable = false)
     private String content;
 
     // like 데이터베이스 예약어.
+    @Column
     private Integer likeCount;
 
     @Column(nullable = false)
