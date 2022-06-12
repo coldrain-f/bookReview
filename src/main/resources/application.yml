@@ -14,7 +14,22 @@ spring:
       ddl-auto: create
     database-platform: org.hibernate.dialect.H2Dialect
 #    defer-datasource-initialization: true
-#    show-sql: true System.out.println()
+#    show-sql: true
+  security:
+    oauth2:
+      client:
+        # 2가지 설정만 해주면 CommonOAuth2 설정은 끝난다. ( 구글, 페이스북, 깃허브 등등 )
+        registration:
+          google:
+            # 1. Google 에서 받은 클라이언트 ID를 등록
+            clientId:
+            # 2. Google 에서 받은 클라이언트 보안 비밀을 등록
+            clientSecret:
+
+        # CommonOAuth2 가 아닌 Provider 설정시 필요
+#        provider:
+#          naver:
+#          kakao:
 
 logging:
   level:

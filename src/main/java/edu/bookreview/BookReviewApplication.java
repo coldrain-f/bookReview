@@ -4,12 +4,16 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.security.config.oauth2.client.CommonOAuth2Provider;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @SpringBootApplication
 @EnableJpaAuditing
 public class BookReviewApplication {
+
+    // OAuth2 사용
+    CommonOAuth2Provider commonOAuth2Provider;
 
     public static void main(String[] args) {
         SpringApplication.run(BookReviewApplication.class, args);

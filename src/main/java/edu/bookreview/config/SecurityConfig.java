@@ -11,7 +11,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
@@ -45,17 +44,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
                 .csrf().disable()
-                .sessionManagement() // Token 을 사용하면 세션을 사용할 필요가 없음.
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
+                // Token 을 사용하면 세션을 사용할 필요가 없음. ( OAuth2 사용시 세션 풀어줘야 함 )
+//                .sessionManagement()
+//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//                .and()
                 // 로그인 필터를 UsernamePasswordAuthenticationFilter 자리에 끼운다.
-                .addFilterAt(loginFilter, UsernamePasswordAuthenticationFilter.class)
-                .addFilterAt(checkFilter, BasicAuthenticationFilter.class);
+//                .addFilterAt(loginFilter, UsernamePasswordAuthenticationFilter.class)
+//                .addFilterAt(checkFilter, BasicAuthenticationFilter.class)
+                // OAuth2 로그인 설정 application.yml 설정과 Google Cloud Platform 에서 설정이 필요.
+                // 승인된 리디렉션 URI http://localhost:8080/login/oauth2/code/google 을 추가해줘야 한다.
+                .oauth2Login()
+        ;
 
         http.authorizeRequests()
                 .antMatchers("/api/signup").permitAll()
                 .antMatchers("/login").permitAll()
                 .antMatchers("/h2-console/**").permitAll()
-                .anyRequest().authenticated();
+                .anyRequest().authenticated()
+        ;
+
     }
 }
