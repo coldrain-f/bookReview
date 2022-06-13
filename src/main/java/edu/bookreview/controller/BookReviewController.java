@@ -1,6 +1,8 @@
 package edu.bookreview.controller;
 
 import edu.bookreview.dto.BookReviewDto;
+import edu.bookreview.dto.DetailPageDto;
+import edu.bookreview.dto.MainPageDto;
 import edu.bookreview.security.PrincipalDetails;
 import edu.bookreview.service.BookReviewService;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -41,5 +45,17 @@ public class BookReviewController {
     public void writeBookReview(@AuthenticationPrincipal PrincipalDetails principalDetails
             , @RequestBody BookReviewDto bookReviewDto){
         bookReviewService.writeBookReviewTest(principalDetails, bookReviewDto);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/api/bookreviews")
+    public List<MainPageDto> allBookReviews(){
+        return bookReviewService.getAllBookReviews();
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/api/bookreviews/{id}")
+    public DetailPageDto findBookReview(@PathVariable Long id){
+        return bookReviewService.findBookReview(id);
     }
 }

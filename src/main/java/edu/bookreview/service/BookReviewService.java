@@ -1,21 +1,25 @@
 package edu.bookreview.service;
 
-import edu.bookreview.dto.BookReviewDto;
 import edu.bookreview.dto.DetailPageDTO;
 import edu.bookreview.dto.MainPageDTO;
+import edu.bookreview.dto.BookReviewDto;
 import edu.bookreview.entity.BookReview;
 import edu.bookreview.entity.Timestamped;
 import edu.bookreview.repository.BookReviewRepository;
-import edu.bookreview.repository.UserRepository;
 import edu.bookreview.security.PrincipalDetails;
+import edu.bookreview.repository.UserRepository;
 import edu.bookreview.util.SaveFile;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,19 +67,5 @@ public class BookReviewService extends Timestamped {
 
         bookReviewRepository.save(bookReview);
     }
-
-    @Transactional
-    public void writeBookReviewTest(PrincipalDetails principalDetails, BookReviewDto bookReviewDto){
-        BookReview bookReview = BookReview.builder()
-                .user(principalDetails.getUser())
-                .title(bookReviewDto.getTitle())
-                .bookBuyUrl(bookReviewDto.getBookBuyUrl())
-                .bookImageUrl(bookReviewDto.getImgUrl())
-                .content(bookReviewDto.getContent())
-                .rank(bookReviewDto.getRank())
-                .build();
-        bookReviewRepository.save(bookReview);
-    }
-
 
 }
