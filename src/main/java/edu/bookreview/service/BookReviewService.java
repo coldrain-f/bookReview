@@ -1,7 +1,7 @@
 package edu.bookreview.service;
 
-import edu.bookreview.dto.DetailPageDTO;
-import edu.bookreview.dto.MainPageDTO;
+import edu.bookreview.dto.DetailPageDto;
+import edu.bookreview.dto.MainPageDto;
 import edu.bookreview.dto.BookReviewDto;
 import edu.bookreview.entity.BookReview;
 import edu.bookreview.entity.Timestamped;
@@ -29,22 +29,22 @@ public class BookReviewService extends Timestamped {
     private final UserRepository userRepository;
     private final SaveFile saveFile;
 
-    public List<MainPageDTO> getAllBookReviews() {
+    public List<MainPageDto> getAllBookReviews() {
         List<BookReview> bookReviews = bookReviewRepository.findAllByOrderByCreatedDateDesc();
-        List<MainPageDTO> mainPageDTOS = new ArrayList<>();
+        List<MainPageDto> mainPageDtos = new ArrayList<>();
 
         for (BookReview bookReview: bookReviews){
-            MainPageDTO mainPageDTO = new MainPageDTO();
-            mainPageDTOS.add(mainPageDTO);
+            MainPageDto mainPageDTO = new MainPageDto();
+            mainPageDtos.add(mainPageDTO);
         }
-        return mainPageDTOS;
+        return mainPageDtos;
     }
 
     @Transactional
-    public DetailPageDTO findBookReview(Long id){
+    public DetailPageDto findBookReview(Long id){
         BookReview bookReview = bookReviewRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("리뷰가 존재하지 않습니다."));
-        return new DetailPageDTO();
+        return new DetailPageDto();
     }
   
     @Transactional

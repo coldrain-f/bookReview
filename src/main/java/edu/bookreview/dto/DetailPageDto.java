@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class DetailPageDTO extends Timestamped {
+public class DetailPageDto extends Timestamped {
     private Long id;
 
     private User nickname;
@@ -31,7 +31,7 @@ public class DetailPageDTO extends Timestamped {
 
     private LocalDateTime createdDate;
 
-    public DetailPageDTO(BookReview bookReview, String bookBuyUrl, LocalDateTime createdDate) {
+    public DetailPageDto(BookReview bookReview, String bookBuyUrl, LocalDateTime createdDate) {
         this.id = bookReview.getId();
         this.nickname = bookReview.getUser();
         this.rank = bookReview.getRank();

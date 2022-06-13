@@ -1,17 +1,18 @@
 package edu.bookreview.controller;
 
 import edu.bookreview.dto.BookReviewDto;
+import edu.bookreview.dto.DetailPageDto;
+import edu.bookreview.dto.MainPageDto;
 import edu.bookreview.security.PrincipalDetails;
 import edu.bookreview.service.BookReviewService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -35,5 +36,17 @@ public class BookReviewController {
             , @RequestPart BookReviewDto bookReviewDto
             , @RequestPart(value = "file", required = false) MultipartFile imgFile){
         bookReviewService.writeBookReview(principalDetails, bookReviewDto, imgFile);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/api/bookreviews")
+    public List<MainPageDto> allBookReviews(){
+        return bookReviewService.getAllBookReviews();
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/api/bookreviews/{id}")
+    public DetailPageDto findBookReview(@PathVariable Long id){
+        return bookReviewService.findBookReview(id);
     }
 }
