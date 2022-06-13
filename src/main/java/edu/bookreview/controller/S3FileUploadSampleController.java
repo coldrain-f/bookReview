@@ -7,8 +7,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-
 @RequiredArgsConstructor
 @RestController
 public class S3FileUploadSampleController {
@@ -16,7 +14,7 @@ public class S3FileUploadSampleController {
     private final AwsS3FileUploader awsS3FileUploader;
 
     @PostMapping("/images")
-    public String upload(@RequestParam("images") MultipartFile multipartFile) throws IOException {
+    public String upload(@RequestParam("images") MultipartFile multipartFile) {
         return awsS3FileUploader.uploadFile(multipartFile);
     }
 }
