@@ -45,6 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
                 .csrf().disable()
+                .cors().disable()
                 .sessionManagement() // Token 을 사용하면 세션을 사용할 필요가 없음.
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
@@ -53,7 +54,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilterAt(checkFilter, BasicAuthenticationFilter.class);
 
         http.authorizeRequests()
+                // TODO: 2022-06-13
+                .antMatchers("/images").permitAll()
                 .antMatchers("/api/signup").permitAll()
+                .antMatchers("/api/authentication").permitAll()
                 .antMatchers("/login").permitAll()
                 .antMatchers("/h2-console/**").permitAll()
                 .anyRequest().authenticated();
