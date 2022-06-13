@@ -63,7 +63,7 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
         // authResult.getPrincipal() 을 통해서 세션에 저장된 PrincipalDetails 를 얻어올 수 있다.
         PrincipalDetails principalDetails = (PrincipalDetails) authResult.getPrincipal();
         String token = JWTUtil.makeAuthToken(principalDetails.getUser());
-        Cookie cookie = new Cookie("JWTToken", token);
+        Cookie cookie = new Cookie(JWTUtil.JWT_COOKIE_NAME, token);
         cookie.setMaxAge(JWTUtil.AUTH_TIME_SECOND); // 쿠키의 만료 시간 20분
         cookie.setHttpOnly(true);
         cookie.setPath("/"); // 쿠키 사용경로
