@@ -15,16 +15,16 @@ public class BookReviewApplication {
         SpringApplication.run(BookReviewApplication.class, args);
     }
 
-    @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurer() {
-
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                // TODO: 2022-06-11 추후에 프론트엔드 서버 IP 주소로 변경해야 함.
-                registry.addMapping("/**").allowedOrigins("127.0.0.1");
-            }
-        };
-    }
+//    @Bean
+//    public WebMvcConfigurer corsConfigurer() {
+//        return new WebMvcConfigurer() {
+//
+//            @Override
+//            public void addCorsMappings(CorsRegistry registry) {
+//                // TODO: 2022-06-11 추후에 프론트엔드 서버 IP 주소로 변경해야 함.
+//                registry.addMapping("/**").allowedOrigins("127.0.0.1");
+//            }
+//        };
+//    }
 
 }
