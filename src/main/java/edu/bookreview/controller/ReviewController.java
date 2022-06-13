@@ -43,7 +43,6 @@ public class ReviewController {
     @PostMapping("/reviews")
     public void createReview(ReviewCreateRequest reviewCreateRequest,
                              @AuthenticationPrincipal PrincipalDetails principalDetails) {
-        log.info("request = {}", reviewCreateRequest);
         reviewService.writeReview(principalDetails.getUser(), reviewCreateRequest);
     }
 
