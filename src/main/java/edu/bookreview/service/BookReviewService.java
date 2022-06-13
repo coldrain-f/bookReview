@@ -12,6 +12,10 @@ import edu.bookreview.util.SaveFile;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,6 +32,7 @@ public class BookReviewService extends Timestamped {
     private final UserRepository userRepository;
     private final SaveFile saveFile;
 
+    @Transactional
     public List<MainPageDto> getAllBookReviews() {
         List<BookReview> bookReviews = bookReviewRepository.findAllByOrderByCreatedDateDesc();
         List<MainPageDto> mainPageDtos = new ArrayList<>();
@@ -37,6 +42,13 @@ public class BookReviewService extends Timestamped {
             mainPageDtos.add(mainPageDto);
         }
         return mainPageDtos;
+    }
+
+    public Page<BookReview> viewAll(Pageable pageable) {
+        Sort.Direction direction = Sort.Direction.DESC;
+        Sort sort = Sort.by(direction);
+        pageable = PageRequest.of(0, 10, sort);
+        return bookReviewRepository.findAll(pageable);
     }
 
     @Transactional
@@ -76,6 +88,4 @@ public class BookReviewService extends Timestamped {
                 .build();
         bookReviewRepository.save(bookReview);
     }
-
-
 }

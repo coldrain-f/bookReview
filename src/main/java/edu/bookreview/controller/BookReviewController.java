@@ -3,10 +3,18 @@ package edu.bookreview.controller;
 import edu.bookreview.dto.BookReviewDto;
 import edu.bookreview.dto.DetailPageDto;
 import edu.bookreview.dto.MainPageDto;
+import edu.bookreview.entity.BookReview;
+import edu.bookreview.entity.User;
+import edu.bookreview.repository.BookReviewRepository;
+import edu.bookreview.repository.UserRepository;
 import edu.bookreview.security.PrincipalDetails;
 import edu.bookreview.service.BookReviewService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +28,7 @@ import java.util.List;
 public class BookReviewController {
 
     private final BookReviewService bookReviewService;
+    private final BookReviewRepository bookReviewRepository;
 
     // Multipart requests consist of sending data of many different types separated by a boundary as part of a single HTTP method call.
     // @RequestPart : method argument 와 함께 요청되는 multipart request를 관리하는 어노테이션
@@ -57,5 +66,11 @@ public class BookReviewController {
     @GetMapping("/api/bookreviews/{id}")
     public DetailPageDto findBookReview(@PathVariable Long id){
         return bookReviewService.findBookReview(id);
+    }
+
+    @GetMapping("/api/viewAll")
+    public Page<BookReview> viewAll(
+            @PageableDefault(page = 0, size = 10, sort = "createdDate", direction = Sort.Direction.DESC) Pageable pageable) {
+        return  bookReviewRepository.findAll(pageable);
     }
 }
