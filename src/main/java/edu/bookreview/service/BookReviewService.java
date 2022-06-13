@@ -1,25 +1,21 @@
 package edu.bookreview.service;
 
-import edu.bookreview.dto.DetailPageDTO;
-import edu.bookreview.dto.MainPageDTO;
 import edu.bookreview.dto.BookReviewDto;
+import edu.bookreview.dto.DetailPageDto;
+import edu.bookreview.dto.MainPageDto;
 import edu.bookreview.entity.BookReview;
 import edu.bookreview.entity.Timestamped;
 import edu.bookreview.repository.BookReviewRepository;
-import edu.bookreview.security.PrincipalDetails;
 import edu.bookreview.repository.UserRepository;
+import edu.bookreview.security.PrincipalDetails;
 import edu.bookreview.util.SaveFile;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-
-import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,22 +28,22 @@ public class BookReviewService extends Timestamped {
     private final UserRepository userRepository;
     private final SaveFile saveFile;
 
-    public List<MainPageDTO> getAllBookReviews() {
+    public List<MainPageDto> getAllBookReviews() {
         List<BookReview> bookReviews = bookReviewRepository.findAllByOrderByCreatedDateDesc();
-        List<MainPageDTO> mainPageDTOS = new ArrayList<>();
+        List<MainPageDto> mainPageDtos = new ArrayList<>();
 
         for (BookReview bookReview: bookReviews){
-            MainPageDTO mainPageDTO = new MainPageDTO();
-            mainPageDTOS.add(mainPageDTO);
+            MainPageDto mainPageDto = new MainPageDto();
+            mainPageDtos.add(mainPageDto);
         }
-        return mainPageDTOS;
+        return mainPageDtos;
     }
 
     @Transactional
-    public DetailPageDTO findBookReview(Long id){
+    public DetailPageDto findBookReview(Long id){
         BookReview bookReview = bookReviewRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("리뷰가 존재하지 않습니다."));
-        return new DetailPageDTO();
+        return new DetailPageDto();
     }
   
     @Transactional
@@ -67,5 +63,19 @@ public class BookReviewService extends Timestamped {
 
         bookReviewRepository.save(bookReview);
     }
+
+    @Transactional
+    public void writeBookReviewTest(PrincipalDetails principalDetails, BookReviewDto bookReviewDto){
+        BookReview bookReview = BookReview.builder()
+                .user(principalDetails.getUser())
+                .title(bookReviewDto.getTitle())
+                .bookBuyUrl(bookReviewDto.getBookBuyUrl())
+                .bookImageUrl(bookReviewDto.getImgUrl())
+                .content(bookReviewDto.getContent())
+                .rank(bookReviewDto.getRank())
+                .build();
+        bookReviewRepository.save(bookReview);
+    }
+
 
 }
