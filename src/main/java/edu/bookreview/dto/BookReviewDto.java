@@ -7,7 +7,6 @@ import java.io.File;
 import java.time.LocalDateTime;
 
 @Getter
-@RequiredArgsConstructor
 @EqualsAndHashCode  // equals : 두 객체의 내용이 같은지 동등성(equality), hashCode : 두 객체가 같은 객체인지, 동일성(identity)를 비교하는 연산자
 public class BookReviewDto {
 

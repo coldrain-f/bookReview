@@ -7,10 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
@@ -29,6 +26,7 @@ public class BookReviewController {
     // required = false 주의할 점
     // Spring이 해당 Argument 를 무시한다.
 
+    // 기존 코드
 //    @ResponseStatus(HttpStatus.OK)
 //    @PostMapping("/api/bookreviews")
 //    public void writeBookReview(@AuthenticationPrincipal PrincipalDetails principalDetails
@@ -41,7 +39,7 @@ public class BookReviewController {
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/api/bookreviews")
     public void writeBookReview(@AuthenticationPrincipal PrincipalDetails principalDetails
-            , @RequestPart BookReviewDto bookReviewDto){
+            , @RequestBody BookReviewDto bookReviewDto){
         bookReviewService.writeBookReviewTest(principalDetails, bookReviewDto);
     }
 }
