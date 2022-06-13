@@ -65,10 +65,12 @@ public class BookReview extends Timestamped {
         likeBookReview.addBookReview(this);
     }
 
+    public void addImgUrl(String bookImageUrl){
+        this.bookImageUrl = bookImageUrl;
+    }
     public void updateLikeCnt(Integer likeCount){
         this.likeCount = likeCount;
     }
-
 
     @PrePersist // 영속화 되기전에 실행.
     public void initDefaultLikeCount() {

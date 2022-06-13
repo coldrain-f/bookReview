@@ -1,6 +1,8 @@
 package edu.bookreview.service;
 
 import edu.bookreview.dto.BookReviewDto;
+import edu.bookreview.dto.ImgFileDto;
+import edu.bookreview.dto.ReviewsRequestDto;
 import edu.bookreview.entity.BookReview;
 import edu.bookreview.repository.BookReviewRepository;
 import edu.bookreview.security.PrincipalDetails;
@@ -11,29 +13,23 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class BookReviewService {
 
     private final BookReviewRepository bookReviewRepository;
     private final SaveFile saveFile;
 
+    public void writeBookReview(PrincipalDetails principalDetails, BookReview bookReview, MultipartFile file) {
 
-    @Transactional
-    public void writeBookReview(PrincipalDetails principalDetails, BookReviewDto bookReviewDto, MultipartFile imgFile) {
-
-        String bookImageUrl = saveFile.saveFile(imgFile);
+        String bookImageUrl = saveFile.saveFile(file);
 
         // BookReview entity 생성
-        BookReview bookReview = BookReview.builder()
-                .user(principalDetails.getUser())
-                .title(bookReviewDto.getTitle())
-                .bookBuyUrl(bookReviewDto.getBookBuyUrl())
-                .bookImageUrl(bookImageUrl)
-                .content(bookReviewDto.getContent())
-                .rank(bookReviewDto.getRank())
-                .build();
+        bookReview.addImgUrl(bookImageUrl);
 
         bookReviewRepository.save(bookReview);
     }

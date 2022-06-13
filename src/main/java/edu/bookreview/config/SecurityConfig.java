@@ -4,6 +4,7 @@ import edu.bookreview.security.PrincipalService;
 import edu.bookreview.security.jwt.JWTCheckFilter;
 import edu.bookreview.security.jwt.JWTLoginFilter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cloud.aws.context.config.annotation.EnableContextInstanceData;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -19,6 +20,7 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @RequiredArgsConstructor
+@EnableContextInstanceData
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -53,6 +55,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilterAt(checkFilter, BasicAuthenticationFilter.class);
 
         http.authorizeRequests()
+//                //test 위해서 삭제 필요
+//                .antMatchers("/api/bookreviews").permitAll()
+
                 .antMatchers("/api/signup").permitAll()
                 .antMatchers("/login").permitAll()
                 .antMatchers("/h2-console/**").permitAll()

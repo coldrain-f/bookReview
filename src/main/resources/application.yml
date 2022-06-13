@@ -1,4 +1,9 @@
 spring:
+  # multipartFile 용량 늘려주는 설정
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
   h2:
     console:
       enabled: true
@@ -20,8 +25,28 @@ logging:
   level:
     org.hibernate.SQL: debug
     org.hibernate.type: trace
+  com:
+    amazonaws:
+      util:
+        EC2MetadataUtils: ERROR
 
-# 실제 업로드된 이미지가 저장되는 경로 지정
-# local path -> 배포시 aws 의 외부 경로 설정 필요
+cloud:
+  aws:
+    # s3 bucket 이름 배포시 변경 필요
+    s3:
+      bucket: 
+    # user access-key, secret-key 배포시 작성 필요
+    credentials:
+      access-key:
+      secret-key:
+    # s3 region
+    region:
+      static: ap-northeast-2
+      auto: false
+    stack:
+      auto: false
+
+## 실제 업로드된 이미지가 저장되는 경로 지정
+## local path -> 배포시 aws 의 외부 경로 설정 필요
 file:
   path: '/Users/choismac/Desktop/Image/'

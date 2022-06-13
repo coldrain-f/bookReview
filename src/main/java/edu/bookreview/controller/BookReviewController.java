@@ -1,19 +1,22 @@
 package edu.bookreview.controller;
 
-import edu.bookreview.dto.BookReviewDto;
+import edu.bookreview.dto.ReviewsRequestDto;
 import edu.bookreview.security.PrincipalDetails;
 import edu.bookreview.service.BookReviewService;
 import edu.bookreview.service.LikeService;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
+
+@Slf4j
+@ToString
 @RestController
 @RequiredArgsConstructor
-@Slf4j
+@RequestMapping("/api")
 public class BookReviewController {
 
     private final BookReviewService bookReviewService;
@@ -29,16 +32,17 @@ public class BookReviewController {
     // Spring이 해당 Argument 를 무시한다.
 
     @ResponseStatus(HttpStatus.OK)
-    @PostMapping("/api/bookreviews")
+    @PostMapping("/bookreviews")
     public void writeBookReview(@AuthenticationPrincipal PrincipalDetails principalDetails
-            , @RequestPart BookReviewDto bookReviewDto
-            , @RequestPart(value = "file", required = false) MultipartFile imgFile){
-        bookReviewService.writeBookReview(principalDetails, bookReviewDto, imgFile);
+            , ReviewsRequestDto reviewsRequestDto) {
+        log.info("reviewsRequestDto : {}", reviewsRequestDto);
+        bookReviewService.writeBookReview(principalDetails, reviewsRequestDto.toEntity(principalDetails.getUser()), reviewsRequestDto.getFile());
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @PostMapping("/api/bookreview/{review_id}/like")
+    @PostMapping("/bookreview/{review_id}/like")
     public boolean likeBookReview(@AuthenticationPrincipal PrincipalDetails principalDetails, @PathVariable Long review_id){
         return likeService.likeBookReview(principalDetails, review_id);
     }
 }
+
