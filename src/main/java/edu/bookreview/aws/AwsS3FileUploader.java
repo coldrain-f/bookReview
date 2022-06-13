@@ -32,14 +32,11 @@ public class AwsS3FileUploader {
     public String uploadFile(MultipartFile multipartFile) {
         String fileName = createFileName(multipartFile);
         ObjectMetadata objectMetadata = new ObjectMetadata();
-        log.info("contentLength = {}", multipartFile.getSize());
-        log.info("contentType = {}", multipartFile.getContentType());
 
         objectMetadata.setContentLength(multipartFile.getSize());
         objectMetadata.setContentType(multipartFile.getContentType());
 
         try (InputStream inputStream = multipartFile.getInputStream()) {
-            log.info("bucket = {}", bucket);
             amazonS3Client.putObject(
                     new PutObjectRequest(bucket, fileName, inputStream, objectMetadata)
                             .withCannedAcl(CannedAccessControlList.PublicRead)
@@ -48,10 +45,12 @@ public class AwsS3FileUploader {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "File upload failed.");
         }
 
-        return fileName;
+        // Bucket 에서 파일 이름에 해당하는 URL 을 가지고 온다.
+        // https://coldrain-f-bucket.s3.ap-northeast-2.amazonaws.com/images/1b7283f2-9c72-4c69-829b-11da5a9b0d4a585872.jpg
+        return amazonS3Client.getUrl(bucket, fileName).toString();
     }
 
     private String createFileName(MultipartFile multipartFile) {
-        return "static/" + UUID.randomUUID() + multipartFile.getOriginalFilename();
+        return "images/" + UUID.randomUUID() + multipartFile.getOriginalFilename();
     }
 }

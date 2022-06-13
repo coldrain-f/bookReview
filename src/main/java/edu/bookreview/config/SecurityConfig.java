@@ -6,12 +6,14 @@ import edu.bookreview.security.jwt.JWTLoginFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
@@ -73,7 +75,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilterAt(checkFilter, BasicAuthenticationFilter.class);
 
         http.authorizeRequests()
-                // TODO: 2022-06-13
+                // TODO: 2022-06-13 /images 테스트용이므로 배포전에 지워야 함. 
+                // TODO: 2022-06-13 테스트용으로 /api 임시로 열어뒀으므로 배포전에 지워야 함.
+                .antMatchers("/api/**").permitAll()
                 .antMatchers("/images").permitAll()
                 .antMatchers("/api/signup").permitAll()
                 .antMatchers("/api/authentication").permitAll()
