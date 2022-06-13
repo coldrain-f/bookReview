@@ -64,4 +64,18 @@ public class BookReviewService extends Timestamped {
         bookReviewRepository.save(bookReview);
     }
 
+    @Transactional
+    public void writeBookReviewTest(PrincipalDetails principalDetails, BookReviewDto bookReviewDto){
+        BookReview bookReview = BookReview.builder()
+                .user(principalDetails.getUser())
+                .title(bookReviewDto.getTitle())
+                .bookBuyUrl(bookReviewDto.getBookBuyUrl())
+                .bookImageUrl(bookReviewDto.getImgUrl())
+                .content(bookReviewDto.getContent())
+                .rank(bookReviewDto.getRank())
+                .build();
+        bookReviewRepository.save(bookReview);
+    }
+
+
 }

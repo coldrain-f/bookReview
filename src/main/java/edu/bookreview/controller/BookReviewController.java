@@ -29,11 +29,19 @@ public class BookReviewController {
     // required = false 주의할 점
     // Spring이 해당 Argument 를 무시한다.
 
+//    @ResponseStatus(HttpStatus.OK)
+//    @PostMapping("/api/bookreviews")
+//    public void writeBookReview(@AuthenticationPrincipal PrincipalDetails principalDetails
+//            , @RequestPart BookReviewDto bookReviewDto
+//            , @RequestPart(value = "file", required = false) MultipartFile imgFile){
+//        bookReviewService.writeBookReview(principalDetails, bookReviewDto, imgFile);
+//    }
+
+    // Test API
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/api/bookreviews")
     public void writeBookReview(@AuthenticationPrincipal PrincipalDetails principalDetails
-            , @RequestPart BookReviewDto bookReviewDto
-            , @RequestPart(value = "file", required = false) MultipartFile imgFile){
-        bookReviewService.writeBookReview(principalDetails, bookReviewDto, imgFile);
+            , @RequestPart BookReviewDto bookReviewDto){
+        bookReviewService.writeBookReviewTest(principalDetails, bookReviewDto);
     }
 }
