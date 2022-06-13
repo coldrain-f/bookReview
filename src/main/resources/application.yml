@@ -34,7 +34,7 @@ cloud:
   aws:
     # s3 bucket 이름 배포시 변경 필요
     s3:
-      bucket: 
+      bucket:
     # user access-key, secret-key 배포시 작성 필요
     credentials:
       access-key:
