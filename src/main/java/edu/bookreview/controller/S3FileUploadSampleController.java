@@ -1,7 +1,6 @@
 package edu.bookreview.controller;
 
 import edu.bookreview.aws.AwsS3FileUploader;
-import edu.bookreview.aws.AwsS3Uploader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -12,12 +11,12 @@ import java.io.IOException;
 
 @RequiredArgsConstructor
 @RestController
-public class S3Controller {
+public class S3FileUploadSampleController {
 
-    private final AwsS3FileUploader fileUploader;
+    private final AwsS3FileUploader awsS3FileUploader;
 
     @PostMapping("/images")
     public String upload(@RequestParam("images") MultipartFile multipartFile) throws IOException {
-        return fileUploader.uploadFile(multipartFile);
+        return awsS3FileUploader.uploadFile(multipartFile);
     }
 }
