@@ -41,7 +41,7 @@ public class BookReview extends Timestamped {
     private Integer likeCount;
 
     @Column(nullable = false)
-    private Integer rank;
+    private Integer ranking;
 
     @OneToMany(mappedBy = "bookReview", cascade = CascadeType.ALL)
     private List<LikeBookReview> likeBookReviews = new ArrayList<>();
@@ -58,7 +58,7 @@ public class BookReview extends Timestamped {
         this.bookImageUrl = bookImageUrl;
         this.content = content;
         this.likeCount = likeCount;
-        this.rank = rank;
+        this.ranking = rank;
     }
 
     public void addBookReview(LikeBookReview likeBookReview){
@@ -73,7 +73,7 @@ public class BookReview extends Timestamped {
         this.bookImageUrl = bookImageUrl;
         this.content = content;
         this.likeCount = likeCount;
-        this.rank = rank;
+        this.ranking = rank;
     }
 
 

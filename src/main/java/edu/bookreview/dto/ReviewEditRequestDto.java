@@ -9,9 +9,9 @@ import lombok.RequiredArgsConstructor;
 public class ReviewEditRequestDto {
 
     private final String bookBuyUrl;
+    private final Integer rank;
     private final String title;
     private final String content;
-    private final Integer rank;
 
     public BookReview toEntity(BookReview bookReview){
         return BookReview.builder()

@@ -4,20 +4,27 @@ spring:
     multipart:
       max-file-size: 1024MB
       max-request-size: 1024MB
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
+  #  h2:
+  #    console:
+  #      enabled: true
+  #      path: /h2-console
+  main:
+    allow-bean-definition-overriding: true
+
   datasource:
-    url: jdbc:h2:mem:testdb
-    driver-class-name: org.h2.Driver
-    username: sa
+    url:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username:
     password:
+  #    url: jdbc:h2:mem:testdb
+  #    driver-class-name: org.h2.Driver
+  #    username: sa
+  #    password:
 
   jpa:
     hibernate:
-      ddl-auto: create
-    database-platform: org.hibernate.dialect.H2Dialect
+      ddl-auto: update
+#      database-platform: org.hibernate.dialect.H2Dialect
 #    defer-datasource-initialization: true
 #    show-sql: true System.out.println()
 

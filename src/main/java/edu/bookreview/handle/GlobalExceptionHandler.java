@@ -41,7 +41,16 @@ public class GlobalExceptionHandler {
         return ErrorResponse.of(path, ErrorCode.MISSING_REQUEST_BODY);
     }
 
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler
+    public ErrorResponse handleIllegalArgumentException(
+            IllegalArgumentException e, HttpServletRequest request) {
 
+        log.error("handleIllegalArgumentException", e);
+        String path = request.getRequestURI();
+
+        return ErrorResponse.of(path, ErrorCode.INVALID_INPUT_VALUE);
+    }
 
     /**
      * @Valid 검증 실패시 발생하는 예외
