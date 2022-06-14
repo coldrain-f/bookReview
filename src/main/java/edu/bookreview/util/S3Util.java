@@ -31,7 +31,6 @@ public class S3Util {
         // aws s3 적용
         String imgFileName = createFileName(file);
 
-        // TODO: 2022/06/13
         // aws s3 적용
         ObjectMetadata objectMetadata = new ObjectMetadata();
         objectMetadata.setContentLength(file.getSize());

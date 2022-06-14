@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.bookreview.dto.UserLoginForm;
 import edu.bookreview.security.PrincipalDetails;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.http.HttpStatus;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationServiceException;
@@ -68,6 +69,7 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
         cookie.setHttpOnly(true);
         cookie.setPath("/"); // 쿠키 사용경로
         response.addCookie(cookie);
+        response.setStatus(HttpStatus.SC_CREATED);
         response.setHeader(HttpHeaders.AUTHORIZATION, "Bearer " + token);
     }
 }

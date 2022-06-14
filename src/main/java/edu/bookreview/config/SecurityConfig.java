@@ -75,14 +75,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilterAt(checkFilter, BasicAuthenticationFilter.class);
 
         http.authorizeRequests()
-                // TODO: 2022-06-13 /images 테스트용이므로 배포전에 지워야 함.
-                // TODO: 2022-06-13 테스트용으로 /api 임시로 열어뒀으므로 배포전에 지워야 함.
-                .antMatchers("/api/**").permitAll()
-                .antMatchers("/images").permitAll()
+//                .antMatchers("/api/**").permitAll()
+//                .antMatchers("/images").permitAll()
                 .antMatchers("/api/signup").permitAll()
                 .antMatchers("/api/authentication").permitAll()
                 .antMatchers("/login").permitAll()
                 .antMatchers("/h2-console/**").permitAll()
-                .anyRequest().authenticated();
+                .anyRequest().authenticated()
+        ;
     }
 }

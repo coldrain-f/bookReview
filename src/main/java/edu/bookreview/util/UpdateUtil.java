@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class UpdateUtil {
 
-    // TODO: 2022/06/13
     private final BookReviewRepository bookReviewRepository;
 
     private final LikeBookReviewRepository likeBookReviewRepository;

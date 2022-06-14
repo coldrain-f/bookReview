@@ -12,12 +12,14 @@ import java.util.Optional;
 
 public interface LikeBookReviewRepository extends JpaRepository<LikeBookReview, Long> {
 
-    @Query("select lbookreview from LikeBookReview lbookreview where lbookreview.bookReview.id = :BOOK_REVIEW_ID")
-    List<LikeBookReview> searchLikeBookReview(Long BOOK_REVIEW_ID);
+    @Query("select lbr from LikeBookReview lbr where lbr.bookReview.id = :bookReviewId")
+    List<LikeBookReview> searchLikeBookReview(Long bookReviewId);
 
-    Optional<LikeBookReview> findByUserIdAndBookReviewId(Long userId, Long bookReviewId); // 해당 게시글에 유저가 좋아요를 눌렀는지 확인
+    // 해당 게시글에 유저가 좋아요를 눌렀는지 확인
+    Optional<LikeBookReview> findByUserIdAndBookReviewId(Long userId, Long bookReviewId);
 
+    // TODO: 2022-06-14 @Param 지우고 테스트 작업 필요
     @Modifying
-    @Query("update LikeBookReview l set l.likeStatus = :likeStatus where l.id = :id")
-    void updateLikeStatus(@Param(value = "id") Long likeBookReviewId, @Param(value = "likeStatus") boolean likeStatus);
+    @Query("update LikeBookReview lbr set lbr.likeStatus = :likeStatus where lbr.id = :likeBookReviewId")
+    void updateLikeStatus(Long likeBookReviewId, boolean likeStatus);
 }

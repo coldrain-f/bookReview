@@ -38,5 +38,4 @@ public class User extends Timestamped {
         this.nickname = nickname;
     }
 
-    // TODO: 2022-06-10 좋아요 어떻게?
 }

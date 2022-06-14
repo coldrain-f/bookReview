@@ -5,13 +5,11 @@ import edu.bookreview.service.UserService;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
@@ -24,8 +22,14 @@ public class AuthController {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final UserService userService;
 
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/api/signup")
     public void signup(@RequestBody @Valid AuthUserRequest authUserRequest) {
+        String password = authUserRequest.getPassword();
+        String confirmPassword = authUserRequest.getConfirmPassword();
+        if (!password.equals(confirmPassword))
+            throw new IllegalArgumentException("Passwords are not the same.");
+
         User user = authUserRequest.toEntity(bCryptPasswordEncoder);
         userService.signup(user);
     }
