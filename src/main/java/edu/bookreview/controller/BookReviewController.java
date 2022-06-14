@@ -57,17 +57,16 @@ public class BookReviewController {
     // 수정 기능 작성
     @ResponseStatus(HttpStatus.OK)
     @PatchMapping ("/bookreviews/{id}")
-    public ResponseEntity<String> editBookReview(@AuthenticationPrincipal PrincipalDetails principalDetails
+    public void editBookReview(@AuthenticationPrincipal PrincipalDetails principalDetails
             , @PathVariable Long id
             , @RequestBody ReviewEditRequestDto reviewEditRequestDto){
         HttpHeaders headers = new HttpHeaders();
         String msg = bookReviewService.editBookReview(principalDetails, id, reviewEditRequestDto);
-        return new ResponseEntity<String>(msg, headers, HttpStatus.valueOf(200));
     }
 
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("/bookreviews/{id}")
-    public void deleteBookReview(@AuthenticationPrincipal PrincipalDetails principalDetails, @PathVariable Long id){
+    public void deleteBookReview(@AuthenticationPrincipal PrincipalDetails principalDetails, @PathVariable Long id) {
         bookReviewService.deleteBookReview(principalDetails, id);
     }
 

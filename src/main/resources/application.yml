@@ -1,0 +1,44 @@
+spring:
+  # multipartFile 용량 늘려주는 설정
+  servlet:
+    multipart:
+      max-file-size: 1024MB
+      max-request-size: 1024MB
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    database-platform: org.hibernate.dialect.H2Dialect
+#    defer-datasource-initialization: true
+#    show-sql: true System.out.println()
+
+logging:
+  level:
+    org.hibernate.SQL: debug
+    org.hibernate.type: trace
+  com:
+    amazonaws:
+      util:
+        EC2MetadataUtils: ERROR
+
+# S3 Bucket
+cloud:
+  aws:
+    credentials:
+      access-key: AKIAYXSIBXB7MDBKBOWN
+      secret-key: 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
+    stack:
+      auto: false
+    region:
+      static: ap-northeast-2
+    s3:
+      bucket: choisbucket
