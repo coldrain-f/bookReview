@@ -12,17 +12,17 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableJpaAuditing
 public class BookReviewApplication {
 
-    static {
-        System.setProperty("com.amazonaws.sdk.disableEc2Metadata", "true");
-    }
-
-    public static final String APPLICATION_LOCATIONS = "spring.config.location" + "classpath:application.yml";
+//    static {
+//        System.setProperty("com.amazonaws.sdk.disableEc2Metadata", "true");
+//    }
+//
+//    public static final String APPLICATION_LOCATIONS = "spring.config.location" + "classpath:application.yml";
 
     public static void main(String[] args) {
-//        SpringApplication.run(BookReviewApplication.class, args);
-        new SpringApplicationBuilder(BookReviewApplication.class)
-                .properties(APPLICATION_LOCATIONS)
-                .run(args);
+        SpringApplication.run(BookReviewApplication.class, args);
+//        new SpringApplicationBuilder(BookReviewApplication.class)
+//                .properties(APPLICATION_LOCATIONS)
+//                .run(args);
     }
 
 //    @Bean

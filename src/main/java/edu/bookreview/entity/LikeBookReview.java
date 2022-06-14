@@ -29,23 +29,24 @@ public class LikeBookReview extends Timestamped{
     private BookReview bookReview;
 
 
-    @Column(name = "LIKE_CHECK")
-    private Boolean likeCheck; // true 일 때가 좋아요를 하지 않은 상태
+    @Column(name = "LIKE_STATUS")
+    private Boolean likeStatus; // true 일 때가 좋아요를 하지 않은 상태
 
     @Builder
-    public LikeBookReview(User user, BookReview bookReview, boolean likeCheck){
+    public LikeBookReview(User user, BookReview bookReview, boolean likeStatus){
         this.user = user;
         this.bookReview = bookReview;
-        this.likeCheck = likeCheck;
+        this.likeStatus = likeStatus;
     }
 
     public void addBookReview(BookReview bookReview){
         this.bookReview = bookReview;
     }
 
+//    public void changStatus()
     // 영속화 되기전에 실행
     @PersistenceContext
-    public void initLikeCheck() {
-        if(this.likeCheck) this.likeCheck = true;
+    public void initLikeStatus() {
+        if(this.likeStatus) this.likeStatus = true;
     }
 }
