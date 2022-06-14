@@ -7,13 +7,14 @@ import edu.bookreview.repository.LikeBookReviewRepository;
 import edu.bookreview.security.PrincipalDetails;
 import edu.bookreview.util.UpdateUtil;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class LikeService {
-
 
     private final BookReviewRepository bookReviewRepository;
     private final LikeBookReviewRepository likeBookReviewRepository;
@@ -35,13 +36,12 @@ public class LikeService {
             LikeBookReview firstLike = LikeBookReview.builder()
                     .user(principalDetails.getUser())
                     .bookReview(bookReview)
-                    .likeCheck(false)   // true : 좋아요 안누른 상태, false : 좋아요 누른 상태
+                    .likeStatus(false)   // true : 좋아요 안누른 상태, false : 좋아요 누른 상태
                     .build();
             likeBookReviewRepository.save(firstLike);
             bookReview.addBookReview(firstLike);
             totalLikeCnt = bookReview.getLikeCount() + 1;
-//            bookReview.updateLikeCnt(totalLikeCnt);
-//            bookReviewRepository.save(bookReview);
+
             updateUtil.updateLikeCnt(review_id, totalLikeCnt);
             return true;
         }

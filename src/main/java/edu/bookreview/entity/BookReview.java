@@ -43,11 +43,11 @@ public class BookReview extends Timestamped {
     @Column(nullable = false)
     private Integer rank;
 
-    @OneToMany(mappedBy = "bookReview")
+    @OneToMany(mappedBy = "bookReview", cascade = CascadeType.ALL)
     private List<LikeBookReview> likeBookReviews = new ArrayList<>();
 
     @Builder
-    public BookReview(User user, String title, String bookBuyUrl, String bookImageUrl, String content, Integer rank) {
+    public BookReview(User user, String title, String bookBuyUrl, String bookImageUrl, String content, Integer likeCount, Integer rank) {
         Assert.hasText(title, "title must not be empty");
         if (user == null) throw new IllegalArgumentException("user is null");
         if (rank == null) throw new IllegalArgumentException("rank is null");
@@ -57,6 +57,7 @@ public class BookReview extends Timestamped {
         this.bookBuyUrl = bookBuyUrl;
         this.bookImageUrl = bookImageUrl;
         this.content = content;
+        this.likeCount = likeCount;
         this.rank = rank;
     }
 
@@ -64,6 +65,17 @@ public class BookReview extends Timestamped {
         likeBookReviews.add(likeBookReview);
         likeBookReview.addBookReview(this);
     }
+
+    public void updateBookReview(User user, String title, String bookBuyUrl, String bookImageUrl, String content, Integer likeCount, Integer rank){
+        this.user = user;
+        this.title = title;
+        this.bookBuyUrl = bookBuyUrl;
+        this.bookImageUrl = bookImageUrl;
+        this.content = content;
+        this.likeCount = likeCount;
+        this.rank = rank;
+    }
+
 
     public void addImgUrl(String bookImageUrl){
         this.bookImageUrl = bookImageUrl;

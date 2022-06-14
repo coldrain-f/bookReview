@@ -18,6 +18,6 @@ public interface LikeBookReviewRepository extends JpaRepository<LikeBookReview, 
     Optional<LikeBookReview> findByUserIdAndBookReviewId(Long userId, Long bookReviewId); // 해당 게시글에 유저가 좋아요를 눌렀는지 확인
 
     @Modifying
-    @Query("update LikeBookReview l set l.likeCheck = :likeCheck where l.id = :id")
-    void updateLikeStatus(@Param(value = "id") Long likeBookReviewId, @Param(value = "likeCheck") boolean likeStatus);
+    @Query("update LikeBookReview l set l.likeStatus = :likeStatus where l.id = :id")
+    void updateLikeStatus(@Param(value = "id") Long likeBookReviewId, @Param(value = "likeStatus") boolean likeStatus);
 }

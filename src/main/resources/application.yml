@@ -34,11 +34,11 @@ cloud:
   aws:
     # s3 bucket 이름 배포시 변경 필요
     s3:
-      bucket:
+      bucket: choisbucket
     # user access-key, secret-key 배포시 작성 필요
     credentials:
-      access-key:
-      secret-key:
+      access-key: AKIAYXSIBXB7MDBKBOWN
+      secret-key: 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
     # s3 region
     region:
       static: ap-northeast-2
