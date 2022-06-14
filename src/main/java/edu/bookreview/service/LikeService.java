@@ -2,6 +2,7 @@ package edu.bookreview.service;
 
 import edu.bookreview.entity.BookReview;
 import edu.bookreview.entity.LikeBookReview;
+import edu.bookreview.entity.User;
 import edu.bookreview.repository.BookReviewRepository;
 import edu.bookreview.repository.LikeBookReviewRepository;
 import edu.bookreview.security.PrincipalDetails;
@@ -46,5 +47,10 @@ public class LikeService {
             return true;
         }
         return false;
+    }
+
+    public boolean getStatus(User user, Long reviewId){
+        LikeBookReview likeBookReview = likeBookReviewRepository.findByUserIdAndBookReviewId(user.getId(), reviewId).orElse(null);
+        return likeBookReview == null; //ture : 추천 가능, false : 추천 불가능
     }
 }

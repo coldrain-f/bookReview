@@ -14,7 +14,7 @@ import java.util.List;
 public class BookReview extends Timestamped {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "BOOK_REVIEW_ID")
+    @Column(name = "REVIEW_ID")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -16,7 +16,6 @@ import java.io.IOException;
 import java.util.UUID;
 
 @Slf4j
-//@RequiredArgsConstructor
 @RequiredArgsConstructor
 @Component
 public class S3Util {
@@ -26,9 +25,6 @@ public class S3Util {
 
     private final AmazonS3Client amazonS3Client;
 
-
-    @Value("${file.path}") // application.yml 에 설정된 외부경로, final 사용하면 안됨
-    private String uploadFolder;
 
     public String S3Uploader(MultipartFile file) {
         // TODO: 2022/06/13

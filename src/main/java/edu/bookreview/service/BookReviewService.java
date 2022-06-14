@@ -1,43 +1,32 @@
 package edu.bookreview.service;
 
-import edu.bookreview.dto.BookReviewDto;
 import edu.bookreview.dto.ReviewEditRequestDto;
 import edu.bookreview.entity.BookReview;
-import edu.bookreview.entity.User;
 import edu.bookreview.repository.BookReviewRepository;
 import edu.bookreview.security.PrincipalDetails;
 import edu.bookreview.util.S3Util;
-import edu.bookreview.util.SaveFile;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.multipart.MultipartFile;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
+//@Transactional(readOnly = true)
 public class BookReviewService {
 
-    @PersistenceContext
-    private EntityManager em;
     private final BookReviewRepository bookReviewRepository;
     private final S3Util s3Util;
 
+    @Transactional
     public void writeBookReview(BookReview bookReview, MultipartFile file) {
 
         String bookImageUrl = s3Util.S3Uploader(file);
 
-        // BookReview entity 생성
+        // BookReview entity 생성 후 저장
         bookReview.addImgUrl(bookImageUrl);
-
         bookReviewRepository.save(bookReview);
     }
 
@@ -68,7 +57,7 @@ public class BookReviewService {
                 () -> new NullPointerException("You are not the author of this post")
         );
 
-        s3Util.deleteS3File(bookReview.getBookImageUrl());
+//        s3Util.deleteS3File(bookReview.getBookImageUrl());
         bookReviewRepository.delete(bookReview);
     }
 }

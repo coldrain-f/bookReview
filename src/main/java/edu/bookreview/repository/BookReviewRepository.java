@@ -11,9 +11,7 @@ import java.util.Optional;
 
 public interface BookReviewRepository extends JpaRepository<BookReview, Long>{
 
-
     Optional<BookReview> findByIdAndUser(Long id, User user);
-
 
     @Modifying
     @Query("update BookReview b set b.likeCount = :likeCount where b.id = :id")
