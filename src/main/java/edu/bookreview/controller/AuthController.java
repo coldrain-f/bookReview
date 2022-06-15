@@ -1,17 +1,25 @@
 package edu.bookreview.controller;
 
+import edu.bookreview.dto.UserLoginForm;
 import edu.bookreview.entity.User;
+import edu.bookreview.security.jwt.JWTUtil;
 import edu.bookreview.service.UserService;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -20,6 +28,7 @@ import javax.validation.constraints.Pattern;
 @RequiredArgsConstructor
 public class AuthController {
 
+    private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final UserService userService;
 
@@ -33,6 +42,46 @@ public class AuthController {
 
         User user = authUserRequest.toEntity(bCryptPasswordEncoder);
         userService.signup(user);
+    }
+
+    // 이거 동작 안 되면 파업함.
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping("/api/authenticate")
+    public JWTToken authorize(
+            @RequestBody UserLoginForm loginForm, HttpServletResponse response) {
+        String username = loginForm.getUsername();
+        String password = loginForm.getPassword();
+
+        User user = userService.findByUsername(username)
+                .orElseThrow(() -> new IllegalArgumentException("Please check your ID or password"));
+
+        if (!bCryptPasswordEncoder.matches(password, user.getPassword()))
+            throw new IllegalArgumentException("Please check your ID or password");
+
+        UsernamePasswordAuthenticationToken authenticationToken =
+                new UsernamePasswordAuthenticationToken(loginForm.getUsername(), loginForm.getPassword(), null);
+
+        Authentication authentication = authenticationManagerBuilder.getObject()
+                .authenticate(authenticationToken);
+
+        SecurityContextHolder.getContext()
+                .setAuthentication(authentication);
+
+        String jwtToken = JWTUtil.makeAuthToken(user);
+        response.setHeader(HttpHeaders.AUTHORIZATION, "Bearer " + jwtToken);
+
+        return new JWTToken(jwtToken);
+    }
+
+    @Getter
+    private static class JWTToken {
+        private final String token;
+        private final int expiresAt;
+
+        public JWTToken(String token) {
+            this.token = token;
+            this.expiresAt = JWTUtil.AUTH_TIME_SECOND;
+        }
     }
 
     @GetMapping(value = "/api/authentication")

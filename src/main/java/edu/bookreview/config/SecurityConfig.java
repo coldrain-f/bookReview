@@ -33,7 +33,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
         // TODO: 2022-06-13 배포 전 프론트 엔드 서버 URL 로 변경
-        corsConfiguration.addAllowedOrigin(CorsConfiguration.ALL); // 허용할 URL
+        //corsConfiguration.addAllowedOrigin(CorsConfiguration.ALL); // 허용할 URL
+        corsConfiguration.addAllowedOriginPattern(CorsConfiguration.ALL);
         corsConfiguration.addAllowedHeader(CorsConfiguration.ALL); // 허용할 Header
         corsConfiguration.addAllowedMethod(CorsConfiguration.ALL); // 허용할 Method
         corsConfiguration.setAllowCredentials(true); // 인증 정보 설정
@@ -65,13 +66,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
                 .csrf().disable()
-//                .cors().configurationSource(corsConfigurationSource())
-//                .and()
+                .cors().configurationSource(corsConfigurationSource())
+                .and()
                 .sessionManagement() // Token 을 사용하면 세션을 사용할 필요가 없음.
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 // 로그인 필터를 UsernamePasswordAuthenticationFilter 자리에 끼운다.
-                .addFilterAt(loginFilter, UsernamePasswordAuthenticationFilter.class)
+//                .addFilterAt(loginFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterAt(checkFilter, BasicAuthenticationFilter.class);
 
         http.authorizeRequests()
@@ -79,7 +80,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .antMatchers("/images").permitAll()
 //                .antMatchers("/api/signup").permitAll()
 //                .antMatchers("/api/authentication").permitAll()
-                .antMatchers("/login").permitAll()
+//                .antMatchers("/api/login").permitAll()
                 .antMatchers("/h2-console/**").permitAll()
                 .anyRequest().authenticated()
         ;

@@ -30,7 +30,7 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
         // 기본이 /login 이지만 명시적으로 적어줌.
         // POST /login 요청시 JWTLoginFilter 필터의 attemptAuthentication 가 동작함.
         super(authenticationManager);
-        setFilterProcessesUrl("/login");
+        setFilterProcessesUrl("/api/login");
     }
 
     @Override
