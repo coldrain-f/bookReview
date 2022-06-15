@@ -12,7 +12,9 @@ public enum ErrorCode {
 
     // Authentication
     DUPLICATE_USERNAME(400, "A001", "the username already exists."),
-    DUPLICATE_NICKNAME(400, "A002", "the nickname already exists.")
+    DUPLICATE_NICKNAME(400, "A002", "the nickname already exists."),
+
+    ACCESS_DENIED(401, "A003", "access denied.")
     ;
 
     private final int status;

@@ -4,6 +4,8 @@ import edu.bookreview.type.ErrorCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -39,6 +41,16 @@ public class GlobalExceptionHandler {
         log.error("handleHttpRequestMethodNotSupportedException", e);
         String path = request.getRequestURI();
         return ErrorResponse.of(path, ErrorCode.MISSING_REQUEST_BODY);
+    }
+
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler
+    public ErrorResponse handleAccessDeniedException(
+            AccessDeniedException e, HttpServletRequest request) {
+
+        log.error("handleAccessDeniedException", e);
+        String path = request.getRequestURI();
+        return ErrorResponse.of(path, ErrorCode.ACCESS_DENIED);
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)

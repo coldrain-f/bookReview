@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,10 +41,14 @@ public class BookReviewController {
     public ReviewDetail getReview(@AuthenticationPrincipal PrincipalDetails principalDetails, @PathVariable Long id) {
         BookReview review = reviewService.getReview(id)
                 .orElseThrow(() -> new IllegalArgumentException("review is not found."));
+        if (principalDetails == null) {
+            return ReviewDetail.from(review, false);
+        }
         boolean userLikeStatus = likeService.getStatus(principalDetails.getUser(), id);
         return ReviewDetail.from(review, userLikeStatus);
     }
 
+    @PreAuthorize("hasAnyAuthority('ROLE_USER')")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/bookreviews")
     public void writeBookReview(@AuthenticationPrincipal PrincipalDetails principalDetails
@@ -51,6 +56,7 @@ public class BookReviewController {
         bookReviewService.writeBookReview(reviewsRequestDto.toEntity(principalDetails.getUser()), reviewsRequestDto.getFile());
     }
 
+    @PreAuthorize("hasAnyAuthority('ROLE_USER')")
     @PatchMapping("/bookreviews/{id}")
     public void editBookReview(@AuthenticationPrincipal PrincipalDetails principalDetails
             , @PathVariable Long id
@@ -58,12 +64,13 @@ public class BookReviewController {
         bookReviewService.editBookReview(principalDetails, id, reviewEditRequestDto);
     }
 
+    @PreAuthorize("hasAnyAuthority('ROLE_USER')")
     @DeleteMapping("/bookreviews/{id}")
     public void deleteBookReview(@AuthenticationPrincipal PrincipalDetails principalDetails, @PathVariable Long id) {
         bookReviewService.deleteBookReview(principalDetails, id);
     }
 
-
+    @PreAuthorize("hasAnyAuthority('ROLE_USER')")
     @PostMapping("/bookreviews/{id}/like")
     public boolean likeBookReview(@AuthenticationPrincipal PrincipalDetails principalDetails, @PathVariable Long id) {
         return likeService.likeBookReview(principalDetails, id);
